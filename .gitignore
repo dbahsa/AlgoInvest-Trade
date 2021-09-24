@@ -8,6 +8,12 @@ env.bak/
 venv.bak/
 
 # Dossier / Fichiers
-test_scripts
 .DS_Store
 .git
+presentation/
+_optimized_x.py
+data/client_data1.csv
+data/client_data2.csv
+data/client_decision1.txt
+data/client_decision2.txt
+img/naive_approach.png
