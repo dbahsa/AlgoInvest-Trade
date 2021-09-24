@@ -2,6 +2,7 @@ from ortools.algorithms import pywrapknapsack_solver
 from csv import reader
 import pandas as pd
 import pprint
+# from functools import lru_cache
 #import time
 
 pp = pprint.PrettyPrinter(indent=4)
@@ -13,7 +14,9 @@ with open('data/data0.csv', 'r') as f:
 shares.pop(0)
 
 
+############## OPTIMIZED WITH ORTOOLS YIELDS 91.72€ total_gain ####################
 
+# @lru_cache(maxsize=1000)
 def main():
     # Create the solver.
     solver = pywrapknapsack_solver.KnapsackSolver(

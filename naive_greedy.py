@@ -12,34 +12,33 @@ with open('data/data0.csv', 'r') as f:
 shares.pop(0)
 
 
-################# I. GREEDY/NAIVE APPROACH ######################
-# I. GREEDY APPROACH ==> yields 133.56€
-# With the Greedy approximation, we only take the highest ROI (roi = return on investment), that does not exceed the $500 capital investment limit. It's simple, but not guaranteed to be optimal.
+################# I. GREEDY/NAIVE APPROACH ==> yields 133.56€ ######################
+# With the Greedy approximation, we only take the highest ROI (roi = return on investment), that does not exceed the $500 budget investment limit. It's simple, but not guaranteed to be optimal.
 
-def naive_solution(shares, capital):
+def naive_solution(shares, budget):
     """function to compute the highest earnings using the greedy/naive solution"""
     
-    # capital = amount invested to buys shares
+    # budget = amount invested to buys shares
     # sort shares by roi, descending order:
     shares = sorted(shares, key=lambda share: int(share[2]), reverse=True)
     chosen_shares = {}
-    profit = 0
+    total_gain = 0
     for i in range(len(shares)):
         # name: share name
         # cost: share price
         name, cost, roi  = shares[i]
-        # quantity_of_share: we used floor division to get the max num of shares out of the capital invested
+        # quantity_of_share: we used floor division to get the max num of shares out of the budget invested
         
-        if capital >= int(cost):
+        if budget >= int(cost):
 
-            quantity_of_share = capital // int(cost)
+            quantity_of_share = budget // int(cost)
             chosen_shares[name] = quantity_of_share
-            # update the capital amount (use only what's remained)
-            capital -= quantity_of_share * int(cost)
-            # this capital update works too: capital = capital % int(cost)
-            profit += quantity_of_share*int(cost)*int(roi)/100
-            # the profit is the quantity of a particular share * its roi in € (here, it's computed using int(cost)*int(roi)/100); otherwise put, with any share your earn x amount of € based on its roi, in our case here, with one share of Action-10, the yield is 9.18€. so if you buy 14 of them, you'll earn 14*9.18€=128.52€... and if you add up the one share of Action-19, your total earning is 133.56€.
-    return f"{round(profit, 2)}€", chosen_shares
+            # update the budget amount (use only what's remained)
+            budget -= quantity_of_share * int(cost)
+            # this budget update works too: budget = budget % int(cost)
+            total_gain += quantity_of_share*int(cost)*int(roi)/100
+            # the total_gain is the quantity of a particular share * its roi in € (here, it's computed using int(cost)*int(roi)/100); otherwise put, with any share your earn x amount of € based on its roi, in our case here, with one share of Action-10, the yield is 9.18€. so if you buy 14 of them, you'll earn 14*9.18€=128.52€... and if you add up the one share of Action-19, your total earning is 133.56€.
+    return f"{round(total_gain, 2)}€", chosen_shares
 
 print(naive_solution(shares, 500)) ## yields 133.56€
 
@@ -53,7 +52,6 @@ print(naive_solution(shares, 500)) ## yields 133.56€
 # 2. Evaluate and choose the best combination
 # it will give: n items, 2**n Outcomes.  This algorithm is O(2^n) => good way of solving, but not practical (too slow ==> Time complexity: T(n-1)+T(n-2), Exponential).
 # Memoization is then used to fix this issue (see below with the 2 fibonacci functions)
-
 
 
 
