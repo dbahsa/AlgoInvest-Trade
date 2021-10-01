@@ -6,14 +6,33 @@ from csv import reader
 shares = []
 with open('data/data0.csv', 'r') as f:
     shares = [tuple(x) for x in list(reader(f))]
-# Data header ('Actions #', 'Coût par action (en euros)', 'Bénéfice (après 2 ans)'):
-# header = shares[0] 
-# Remove the header in the csv file to allow sorting needed data
 shares.pop(0)
 
+shares = sorted(shares, key=lambda share: int(share[1]))
 
+# realshares takes into account profit in * not in % (gain of at list 3.5 sec of computation)
+realshares=[]
+for i in range(len(shares)):
+    a=[]
+    c=list(shares[i])
+    a.append(shares[i][0])
+    a.append(int(float(shares[i][1])))
+    a.append(round((float(shares[i][1])*float(shares[i][2])/100), 2))
+    realshares.append(tuple(a))
+
+
+for p in realshares:
+    print(p[1])
+    # print(p[1])
+    # print(p[2])
+    # if p[1].isdigit():
+    #     print(p)
+# print(len(realshares))
+
+
+'''
 ################# I. GREEDY/NAIVE APPROACH ==> yields 133.56€ ######################
-# With the Greedy approximation, we only take the highest ROI (roi = return on investment), that does not exceed the $500 budget investment limit. It's simple, but not guaranteed to be optimal.
+# With the Greedy solution, we only take the highest ROI (roi = return on investment), that does not exceed the $500 budget investment limit. It's simple, but not guaranteed to be optimal.
 
 def naive_solution(shares, budget):
     """function to compute the highest earnings using the greedy/naive solution"""
@@ -33,17 +52,41 @@ def naive_solution(shares, budget):
 
             quantity_of_share = budget // int(cost)
             chosen_shares[name] = quantity_of_share
+            
             # update the budget amount (use only what's remained)
             budget -= quantity_of_share * int(cost)
+            
             # this budget update works too: budget = budget % int(cost)
             total_gain += quantity_of_share*int(cost)*int(roi)/100
+            
             # the total_gain is the quantity of a particular share * its roi in € (here, it's computed using int(cost)*int(roi)/100); otherwise put, with any share your earn x amount of € based on its roi, in our case here, with one share of Action-10, the yield is 9.18€. so if you buy 14 of them, you'll earn 14*9.18€=128.52€... and if you add up the one share of Action-19, your total earning is 133.56€.
+    
     return f"{round(total_gain, 2)}€", chosen_shares
 
 print(naive_solution(shares, 500)) ## yields 133.56€
 
+'''
+
+########## BINARY SEARCH ##########
+'''my_list = [1,3,5,7,9,10,11]
+
+def binary_search(list, item):
+  low = 0
+  high = len(list)-1
+  while low <= high:
+    mid = (high + low)//2
+    guess = list[mid]
+    if guess == item:
+      return mid
+    elif guess < item:
+      low = mid + 1
+    else:
+      high = mid - 1
+  return None
 
 
+print(binary_search(my_list, 5))
+print(binary_search(my_list, -1))'''
 
 
 

@@ -11,6 +11,7 @@ venv.bak/
 .DS_Store
 .git
 presentation/
+.vscode/
 _optimized_x.py
 data/client_data1.csv
 data/client_data2.csv
