@@ -7,26 +7,22 @@ import time
 shares = []
 with open('data/data0.csv', 'r') as f:
     shares = [tuple(x) for x in list(reader(f))]
-# Data header ('Actions #', 'Coût par action (en euros)', 'Bénéfice (après 2 ans)'):
-# header = shares[0] 
-# Remove the header in the csv file to allow sorting needed data
 shares.pop(0)
 
 # realshares takes into account profit in * not in % (gain of at list 3.5 sec of computation)
 realshares=[]
 for i in range(len(shares)):
     a=[]
-    c=list(shares[i])
+    # c=list(shares[i])
     a.append(shares[i][0])
     a.append(int(shares[i][1]))
     a.append(round((int(shares[i][1])*int(shares[i][2])/100), 2))
     realshares.append(tuple(a))
 
 
-############# BRUTE FORCE I: yields 99.05€€  ### O(2^20) ##############
+############# BRUTE FORCE (or Exhaustive Search) yields 99.08€€  ### O(2^20) ##############
 
-# Brute force will check all possible portfolio that can be created with a given budget
-# @lru_cache(maxsize=1000)
+# Brute force will check all possible outcomes that can be created with a given budget
 def brute_force_solution(budget, realshares, final_chosen_shares=[]):
     """function to compute the highest earnings using brute force algorithm"""
     
@@ -47,16 +43,15 @@ def brute_force_solution(budget, realshares, final_chosen_shares=[]):
         
         return profit_one, chosen_shares_for_profit_one
     else:
-        """# Brute force 1 => give the same result as with ortools module with an intermediary value of 227, we get 91.72€ total_gain:
-        # return sum([int(i[2]) for i in chosen_shares]), chosen_shares"""
-        # Brute force 2 yields 99€ total_gain:
         return round(sum([i[2] for i in final_chosen_shares]), 2), final_chosen_shares
 
-start = time.time()
-# print(brute_force_solution(50, shares))
 
-a = brute_force_solution(500, realshares)
-print(f'\nAvec un budget de 500€, on peut ganger "{a[0]}€" de bénéfice en créant un porteuille constitué d\'actions suivantes:\n')
+start = time.time()
+
+budget = 500
+a = brute_force_solution(budget, realshares)
+
+print(f'\nAvec un budget de "{budget}€", on peut ganger "{a[0]}€" de bénéfice en créant un porteuille constitué d\'actions suivantes:\n')
 print('Action: Coût, Bénéfice en €')
 print('----------------------------')
 for x in a[1]:
