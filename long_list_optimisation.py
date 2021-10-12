@@ -5,7 +5,7 @@ import math
 
 # Getting shares data from the first table provided by the customer
 shares = []
-with open('data/client_data2.csv', 'r') as f:
+with open('data/client_data1.csv', 'r') as f:
     shares = [tuple(x) for x in list(reader(f))]
 shares.pop(0)
 
@@ -87,7 +87,7 @@ budget = 500*100
 # budget = 500
 a = dynamic_solution(budget, used_shares)
 
-print(f'\nAvec un budget de "{round(budget/100, 2)}€", on peut ganger "{round((a[0])/100, 2)}€" de bénéfice en créant un porteuille qui comprend les actions suivantes:\n')
+print(f'\nAvec un budget de "{round(budget/100, 2)}€", on peut gagner "{round((a[0])/100, 2)}€" de bénéfice en créant un porteuille qui comprend les actions suivantes:\n')
 # print(f'\nAvec un budget de "{budget}€", on peut ganger "{(a[0])/100}€" de bénéfice en créant un porteuille qui comprend les actions suivantes:\n')
 print('Action:\tCoût en centimes €')
 print('----------------------------')

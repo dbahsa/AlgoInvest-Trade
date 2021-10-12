@@ -22,11 +22,11 @@ for i in range(len(shares)):
 
 ############# BRUTE FORCE (or Exhaustive Search) yields 99.08€€  ### O(2^20) ##############
 
-# Brute force will check all possible outcomes that can be created with a given budget
+# Brute force will check all possible outcomes that can be created within the limit of a given budget
 def brute_force_solution(budget, realshares, final_chosen_shares=[]):
     """function to compute the highest earnings using brute force algorithm"""
     
-    # shares is used as our base point (le point d'arrêt pour la fct° recursive ci-après), as long as there's an item in shares, the algo will keep on computing
+    # shares is used as our base point (for the recursive function right down below), as long as there's an item in shares, the algo will keep on computing
     if realshares:
         
         #profit_one will ignore starting_share
@@ -35,7 +35,7 @@ def brute_force_solution(budget, realshares, final_chosen_shares=[]):
         starting_share = realshares[0]
 
         if starting_share[1] <= budget:
-            # starting_share[1] is the cost of the starting_share chosen above
+            # starting_share[1] corresponds to the cost of the starting_share written above
             profit_two, chosen_shares_for_profit_two = brute_force_solution(budget - starting_share[1], realshares[1:], final_chosen_shares + [starting_share])
             
             if profit_one < profit_two:
@@ -51,7 +51,7 @@ start = time.time()
 budget = 500
 a = brute_force_solution(budget, realshares)
 
-print(f'\nAvec un budget de "{budget}€", on peut ganger "{a[0]}€" de bénéfice en créant un porteuille constitué d\'actions suivantes:\n')
+print(f'\nAvec un budget de "{budget}€", on peut gagner "{a[0]}€" de bénéfice en créant un porteuille constitué d\'actions suivantes:\n')
 print('Action: Coût, Bénéfice en €')
 print('----------------------------')
 for x in a[1]:
@@ -59,18 +59,17 @@ for x in a[1]:
 
 end = time.time()
 print()
-print(f'{round((end-start), 2)} sec')
+print(f'Durée d\'exécution: {round((end-start), 2)} sec')
 print()
 
 
-
 ########## BIG O NOTATION ##############
-'''This works, but it’s really slow. For 3 shares, you have to calculate 8 possible sets. For 4 shares, you have to calculate 16 sets. With every share you add, the number of sets you have to calculate doubles! This algorithm takes O(2^n) time, which is very, very slow. Thus for 20 shares, it takes O(2^20) time to compute.
+'''
+This works, but it’s really slow. For 3 shares, you have to calculate 8 possible sets. For 4 shares, you have to calculate 16 sets. With every share you add, the number of sets you have to calculate doubles! This algorithm takes O(2^n) time, which is very, very slow. Thus for 20 shares, it takes O(2^20) time to compute.
 
 Therefore, we've got to calculate an approximate solution, which will be close to the optimal solution, but won't be the optimal solution.
 
 This is when Dynamic Programming kicks in!
 
 For the knapsack problem, we’ll start by solving the problem for smaller knapsacks (or “sub-knapsacks”) and then work up to solving the original problem.
-
 '''
