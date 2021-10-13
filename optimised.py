@@ -7,7 +7,7 @@ shares = []
 with open('data/data0.csv', 'r') as f:
     shares = [tuple(x) for x in list(reader(f))]
 shares.pop(0)
-# realshares takes into account profit in * not in % (gain of at list 3.5 sec of computation)
+# realshares takes into account profit in * not in % (gain of at least 3.5 sec of computation)
 realshares=[]
 for i in range(len(shares)):
     a=[]
@@ -16,7 +16,7 @@ for i in range(len(shares)):
     a.append(round((int(shares[i][1])*float(shares[i][2])/100), 2))
     realshares.append(tuple(a))
 
-############# OPTIMIZED SOLUTION 1 ##############
+############# OPTIMIZED SOLUTION ##############
 
 def dynamic_solution(budget, realshares):
     """Function to compute the highest investment return, using bottom-up DP solution for a 0-1 Knapsack problem"""
@@ -36,10 +36,9 @@ def dynamic_solution(budget, realshares):
             if ai == 0 or bi == 0: 
                 table[ai][bi] = 0
                 # This part of the code is responsible for setting the 0th row and column to 0.
-                # Add into the table the max of realshares obtained between the line before (int(table[ai-1][bi])) and the max of the current share + the optimised solution minus the item from the preceding line 
+                # Add into the table the max of realshares obtained between the line before 'table[ai-1][bi]' and the max of the current share + the optimised solution minus the item from the preceding line 
                 # table[ai][bi] = max(realshares[ai-1][2] + table[ai-1][bi-ci], table[ai-1][bi])
             elif ci <= bi:
-            # elif realshares[ai-1][1] <= bi:
                 #This following line checks that the cost of the 'ai' share is less than the total cost allowed for that cell (bi).
                 # 'pi' is the profit of the current 'ai' share being computed
                 pi = realshares[ai-1][2]
@@ -56,16 +55,18 @@ def dynamic_solution(budget, realshares):
     n = len(realshares)
     chosen_shares = []
     while b >= 0 and n >= 0:
-        e = realshares[n-1]
-        if table[n][b] == table[n-1][b-e[1]] + e[2]:
-            chosen_shares.append(e)
-            b -= e[1]
+        # 'a': current share
+        a = realshares[n-1]
+        if table[n][b] == table[n-1][b-a[1]] + a[2]:
+            chosen_shares.append(a)
+            b -= a[1]
         n -= 1
     return table[-1][-1], chosen_shares
 
+
+print()
 # START TIMER
 start = time.time()
-print()
 # BUDGET LIMIT
 budget = 500
 dp = dynamic_solution(budget, realshares)
@@ -85,4 +86,3 @@ print(f"Coût Total: {round(float(sum(final_cost)), 2)}€")
 print(f"Bénéfice Total: {round(dp[0], 2)}€")
 print(f"Durée d'exécution: {round((end-start), 4)} sec")
 print()
-

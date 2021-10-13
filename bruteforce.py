@@ -61,15 +61,3 @@ end = time.time()
 print()
 print(f'Durée d\'exécution: {round((end-start), 2)} sec')
 print()
-
-
-########## BIG O NOTATION ##############
-'''
-This works, but it’s really slow. For 3 shares, you have to calculate 8 possible sets. For 4 shares, you have to calculate 16 sets. With every share you add, the number of sets you have to calculate doubles! This algorithm takes O(2^n) time, which is very, very slow. Thus for 20 shares, it takes O(2^20) time to compute.
-
-Therefore, we've got to calculate an approximate solution, which will be close to the optimal solution, but won't be the optimal solution.
-
-This is when Dynamic Programming kicks in!
-
-For the knapsack problem, we’ll start by solving the problem for smaller knapsacks (or “sub-knapsacks”) and then work up to solving the original problem.
-'''
