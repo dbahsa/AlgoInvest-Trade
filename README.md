@@ -1,5 +1,5 @@
 # Algo Invest & Trade
-![justStreamIt](img/P7_AlgoInvest_Présentation.jpg)
+![AlgoInvest_Trade](img/P7_AlgoInvest_Présentation.jpg)
 ## Installation & Utilisation
 ### Fichiers & Dossiers
 #### Dossiers
@@ -13,3 +13,4 @@
 * requirements: modules/packages du projet
 ## Auteur
 * **Didier K Nzimbi** _alias_ [dbahsa](https://github.com/dbahsa)
+![optimal_algo](img/sol_fin_opt.png)
