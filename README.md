@@ -8,7 +8,7 @@
 #### Fichiers
 * **bruteforce.py**: à utiliser pour les 20 premières actions
 * **optimised.py**: à utiliser pour les 20 premières actions
-* **optimised2.py**: légèrement modifié pour utiliser pour les 2 lots d'actions de Sienna
+* **optimised2.py**: légèrement modifié pour utiliser avec les 2 lots d'actions de Sienna
 * graphs.py: à utiliser pour visualiser les données du dossier Data
 * requirements: modules/packages du projet
 ## Auteur
